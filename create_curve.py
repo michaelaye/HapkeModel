@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # Escrevendo em python3 e usando python2.6:
-from __future__ import print_function, unicode_literals, absolute_import, division
+
 
 from numpy import arange, polyfit, polyval, degrees, log10, exp
 import scipy.optimize as opt

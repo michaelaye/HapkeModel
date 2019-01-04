@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # Escrevendo em python3 e usando python2.6:
-from __future__ import print_function, unicode_literals, absolute_import, division
+
 
 from numpy import exp, arange, degrees, array, sum,std,  sqrt, median, polyfit, polyval, abs, log2
 import scipy.interpolate as intp
@@ -82,13 +82,13 @@ class BestNPoints:
 
        y = arg["y"]
 
-       if arg.has_key("par_abs"): par = arg["par_abs"]
-       if arg.has_key("compare"): comp = arg["compare"]       
+       if "par_abs" in arg: par = arg["par_abs"]
+       if "compare" in arg: comp = arg["compare"]       
       
 
        plt.plot(ph,I,label="Actual curve")
        
-       if arg.has_key("x"):  
+       if "x" in arg:  
           plt.plot(arg["x"],y,'bo',label="simulated points")
           plt.plot(ph, func_kaa(comp, ph),label="ajusted phase function (simulated points)")
 
@@ -123,7 +123,7 @@ class BestNPoints:
        plt.figure(figsize=(10,8),dpi=60)
        plt.title("N = 15 | SNR = 50")
 
-       for i in reversed(range(int(n/2))):
+       for i in reversed(list(range(int(n/2)))):
            plt.hist(entry[i], bins=2*log2(entry[i].size + 1), label=entry[n - i - 1 ], \
            histtype='step',linewidth=2, normed=True, range=(0,1))
        

@@ -1,9 +1,10 @@
+from functools import reduce
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 # Filename: hapke_model_v2.py
 
 # Escrevendo em python3 e usando python2.6:
-from __future__ import print_function, unicode_literals, absolute_import, division
+
 
 #############################################################
 #################### Shell Parameters #######################
@@ -139,7 +140,7 @@ class HapkeModel:
   TINY = 1e-20
   order  = 7 # Legendre Polynomial Order
 
-  series = lambda func, o: array(map(func, o))
+  series = lambda func, o: array(list(map(func, o)))
 
   fcompile()
 
@@ -175,7 +176,7 @@ class HapkeModel:
       self.args["refr"] = 1.45
 
       # Set the asymetric parameter:
-      if args.has_key("X"):
+      if "X" in args:
          Qsca, Qe, Qback, gsca = self.Sph_Sca_mie(self.args["X"],self.args["refr"],50)
          
          self.args["Qsca"] = Qsca
@@ -236,7 +237,7 @@ class HapkeModel:
       H_o2 = vec( lambda x: 1e0/(1e0 - w*x*(r0 + 0.5*(1e0 - 2e0*r0*x)*log((1e0 + x)/(x + TINY)) )) )
 
       # Double Factorial
-      fac = vec( lambda n: reduce(int.__mul__,range(n,0,-2)) )
+      fac = vec( lambda n: reduce(int.__mul__,list(range(n,0,-2))) )
 
       # Odd coeficient:
       A = vec( lambda n: (1/n)*(fac(n)/fac(n+1))*(-1)**(0.5*(n+1)) )
@@ -316,7 +317,7 @@ class HapkeModel:
 # Hapke (1993)
   def Bsh(self,Bs0,**args):
 
-      if args.has_key("v") and args.has_key("fill_factor"):
+      if "v" in args and "fill_factor" in args:
          v = args["v"]
          fill_factor = args["fill_factor"]
          a_ratio = args["a_ratio"]
@@ -338,7 +339,7 @@ class HapkeModel:
          
          return 1e0 + Bs0/(1e0 + z/hs)
 
-      elif args.has_key("hs"):
+      elif "hs" in args:
          hs = args["hs"]
 
       return 1e0 + Bs0/(1e0 + z/hs)
@@ -348,7 +349,7 @@ class HapkeModel:
 # Akkermans et al. (1988)
   def Bcb(self,Bc0,**args):
 
-      if args.has_key('X'):
+      if 'X' in args:
          f = args["fill_factor"]
          X = args["X"]
          Qsca = args["Qsca"]
@@ -357,7 +358,7 @@ class HapkeModel:
       # Mishchenko (1992)
          hc = 3e0*f*Qsca*(1 - gsca)/(8e0*X)
 
-      elif args.has_key("hc"): 
+      elif "hc" in args: 
          hc = args["hc"]
 
       x = z/hc

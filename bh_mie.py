@@ -61,7 +61,7 @@ def bhmie(x,refrel,nang):
     nstop = int(xstop)
     
     if (nmx > nmxx):
-        print ( "Value Error: nmx > nmxx=%f for |m|x=%f" % ( nmxx, ymod) )
+        print(( "Value Error: nmx > nmxx=%f for |m|x=%f" % ( nmxx, ymod) ))
         return
     
     dang = .5*pii/ (nang-1)
